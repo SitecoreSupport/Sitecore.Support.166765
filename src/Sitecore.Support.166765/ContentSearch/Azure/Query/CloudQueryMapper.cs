@@ -9,7 +9,7 @@ namespace Sitecore.Support.ContentSearch.Azure.Query
     {
     }
 
-    protected virtual string HandleWhere(WhereNode node, CloudQueryMapperState mappingState)
+    protected override string HandleWhere(WhereNode node, CloudQueryMapperState mappingState)
     {
       var left = this.HandleCloudQuery(node.SourceNode, mappingState);
       var right = this.HandleCloudQuery(node.PredicateNode, mappingState);

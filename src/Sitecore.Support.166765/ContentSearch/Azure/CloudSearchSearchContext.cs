@@ -15,12 +15,12 @@
 
     IQueryable<TItem> IProviderSearchContext.GetQueryable<TItem>()
     {
-      return this.GetQueryable<TItem>(new IExecutionContext[0]);
+      return (this as IProviderSearchContext).GetQueryable<TItem>(new IExecutionContext[0]);
     }
 
     IQueryable<TItem> IProviderSearchContext.GetQueryable<TItem>(IExecutionContext executionContext)
     {
-      return this.GetQueryable<TItem>(new IExecutionContext[]
+      return (this as IProviderSearchContext).GetQueryable<TItem>(new IExecutionContext[]
       {
         executionContext
       });
@@ -28,7 +28,7 @@
 
     IQueryable<TItem> IProviderSearchContext.GetQueryable<TItem>(params IExecutionContext[] executionContexts)
     {
-      LinqToCloudIndex<TItem> linqToCloudIndex = new LinqToCloudIndex<TItem>(this, executionContexts);
+      LinqToCloudIndex<TItem> linqToCloudIndex = new Sitecore.Support.ContentSearch.Azure.Query.LinqToCloudIndex<TItem>(this, executionContexts);
       if (this.Index.Locator.GetInstance<IContentSearchConfigurationSettings>().EnableSearchDebug())
       {
         ((IHasTraceWriter)linqToCloudIndex).TraceWriter = new LoggingTraceWriter(SearchLog.Log);

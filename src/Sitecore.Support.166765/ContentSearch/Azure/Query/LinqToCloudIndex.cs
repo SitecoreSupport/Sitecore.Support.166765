@@ -14,14 +14,16 @@
     public LinqToCloudIndex(Sitecore.ContentSearch.Azure.CloudSearchSearchContext context, IExecutionContext[] executionContexts) : base(context, executionContexts)
     {
       FieldInfo queryMapperFieldInfo;
-      if (queryMapperFieldInfos.TryGetValue(this.GetType(), out queryMapperFieldInfo))
+      var type = this.GetType().BaseType.BaseType;
+      if (queryMapperFieldInfos.TryGetValue(type, out queryMapperFieldInfo))
       {
         queryMapperFieldInfo.SetValue(this, new Sitecore.Support.ContentSearch.Azure.Query.CloudQueryMapper(this.Parameters));        
       }
       else
       {
-        var type = this.GetType();
-        queryMapperFieldInfos.TryAdd(type, type.GetField("queryMapper", BindingFlags.Instance | BindingFlags.NonPublic));
+        queryMapperFieldInfo = type.GetField("queryMapper", BindingFlags.Instance | BindingFlags.NonPublic);
+        queryMapperFieldInfos.TryAdd(type, queryMapperFieldInfo);
+        queryMapperFieldInfo.SetValue(this, new Sitecore.Support.ContentSearch.Azure.Query.CloudQueryMapper(this.Parameters));
       }
     }
   }
