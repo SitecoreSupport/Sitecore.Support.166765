@@ -1,5 +1,7 @@
 ﻿namespace Sitecore.Support.ContentSearch.Azure
 {
+  using System;
+  using Sitecore.Diagnostics;
   using Sitecore.ContentSearch;
   using Sitecore.ContentSearch.Maintenance;
   using Sitecore.ContentSearch.Security;
@@ -15,6 +17,24 @@
 
     public CloudSearchProviderIndex(string name, string connectionStringName, string totalParallelServices, IIndexPropertyStore propertyStore, string @group) : base(name, connectionStringName, totalParallelServices, propertyStore, @group)
     {
+    }
+
+    public override void Initialize()
+    {
+      Log.Warn(string.Format("Sitecore Support: Initializing index {0}", this.Name),this);
+      try
+      {
+        base.Initialize();
+      }
+      catch (Exception e)
+      {
+        Log.Error(string.Format("Sitecore Support: Initializing index {0} failed", e), this);
+        throw;
+      }
+      finally
+      {
+        Log.Warn(string.Format("Sitecore Support: Initializing index {0} completed", this.Name), this);
+      }
     }
 
     public override IProviderSearchContext CreateSearchContext(SearchSecurityOptions options = SearchSecurityOptions.EnableSecurityCheck)
