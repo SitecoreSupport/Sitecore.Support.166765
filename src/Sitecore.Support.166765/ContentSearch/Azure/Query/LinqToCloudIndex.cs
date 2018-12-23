@@ -9,11 +9,18 @@
   public class LinqToCloudIndex<TItem> : Sitecore.ContentSearch.Azure.Query.LinqToCloudIndex<TItem>
   {
     private static ConcurrentDictionary<Type, FieldInfo> queryMapperFieldInfos = new ConcurrentDictionary<Type, FieldInfo>();
+    
     public LinqToCloudIndex(Sitecore.ContentSearch.Azure.CloudSearchSearchContext context, IExecutionContext executionContext) : base(context, executionContext)
     {
+      Init();
     }
 
     public LinqToCloudIndex(Sitecore.ContentSearch.Azure.CloudSearchSearchContext context, IExecutionContext[] executionContexts) : base(context, executionContexts)
+    {
+      Init();
+    }
+
+    private void Init()
     {
       FieldInfo queryMapperFieldInfo;
       var type = this.GetType().BaseType.BaseType;

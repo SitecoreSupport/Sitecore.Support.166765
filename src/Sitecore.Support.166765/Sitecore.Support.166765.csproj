@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="ContentSearch\Azure\CloudSearchProviderIndex.cs" />
     <Compile Include="ContentSearch\Azure\CloudSearchSearchContext.cs" />
+    <Compile Include="ContentSearch\Azure\Query\CloudQueryBuilder.cs" />
     <Compile Include="ContentSearch\Azure\Query\CloudQueryMapper.cs" />
     <Compile Include="ContentSearch\Azure\Query\LinqToCloudIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
